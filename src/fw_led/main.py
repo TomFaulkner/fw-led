@@ -37,18 +37,17 @@ def main():
 
     with led.S(dev.device) as s:
         while True:
-            load_avg = psutil.getloadavg()
             matrix = led.eq(
                 [
                     random.randint(0, 34),
                     round(psutil.virtual_memory().percent // 34),
-                    round(psutil.cpu_count()),
+                    random.randint(0, 34),
                     round(min(psutil.cpu_percent(interval=None) / 34, 3)),
                     round(psutil.sensors_battery().percent // 34),
                     random.randint(0, 34),
-                    round(load_avg[0] * 34),
-                    round(load_avg[1] * 34),
-                    round(load_avg[2] * 34),
+                    random.randint(0, 34),
+                    random.randint(0, 34),
+                    random.randint(0, 34),
                 ],
                 brightness_multiplier,
             )

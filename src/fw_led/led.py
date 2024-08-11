@@ -25,13 +25,17 @@ def assert_matrix(matrix):
         assert all([0 <= i <= 255 for i in row]), "Value not in range 0-255"
 
 
-def eq(vals, brightness_multiplier=100):
+def clamp(value, min_value=10, max_value=255):
+    return max(min(value, max_value), min_value)
+
+
+def eq(vals, brightness_multiplier=100, min_brightness=10):
     """Display 9 values in equalizer diagram starting from the middle, going up and down.
 
     Adapted from the Framework Python library.
     """
     assert len(vals) == 9, f"Need 9 values for the equalizer: {vals}"
-    bm = max(min(1, brightness_multiplier / 100), 0)
+    bm = clamp(brightness_multiplier / 100, 0, 1)
     matrix = [[0 for _ in range(34)] for _ in range(9)]
 
     for col, val in enumerate(vals[:9]):
@@ -40,9 +44,9 @@ def eq(vals, brightness_multiplier=100):
         below = val - above
 
         for i in range(above):
-            matrix[col][row + i] = round(val / 34 * 255 * bm)
+            matrix[col][row + i] = clamp(round(val / 34 * 255 * bm), min_value=min_brightness)
         for i in range(below):
-            matrix[col][row - 1 - i] = round(val / 34 * 255 * bm)
+            matrix[col][row - 1 - i] = clamp(round(val / 34 * 255 * bm), min_value=min_brightness)
 
     return matrix
 
