@@ -9,6 +9,7 @@ packages = [{include = "fw_led", from = "src"}]
 [tool.poetry.dependencies]
 python = "^3.12"
 inputmodule = {path = "../inputmodule-rs/python", develop = true}
+psutil = "^6.0.0"
 
 
 [build-system]
